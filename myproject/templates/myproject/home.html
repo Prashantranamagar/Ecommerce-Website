@@ -1,0 +1,51 @@
+{% extends 'myproject/master.html' %}
+{% load static %}
+
+
+{% block content %}
+<!-- ========================= SECTION MAIN ========================= -->
+<section class="section-intro padding-y-sm">
+<div class="container">
+
+<div class="intro-banner-wrap">
+	<img src="{% static 'images/banners/cover.jpg' %}" class="img-fluid rounded">
+</div>
+
+</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y-sm">
+<div class="container">
+
+<header class="section-heading">
+	<a href="./store.html" class="btn btn-outline-primary float-right">See all</a>
+	<h3 class="section-title">Popular products</h3>
+</header><!-- sect-heading -->
+
+	
+<div class="row">
+	
+	{% for p in products %}
+	<div class="col-md-3">
+		<div class="card card-product-grid">
+			<a href="{% url 'product_detail' p.slug %}" class="img-wrap"> <img src=" {{p.images.url}} "> </a>
+			<figcaption class="info-wrap">
+				<a href=".#" class="title">{{p.description}}</a>
+				<div class="price mt-1">${{p.price}}</div> <!-- price-wrap.// -->
+			</figcaption>
+		</div>
+	</div>
+	{% endfor %}
+</div> <!-- row.// -->
+
+</div><!-- container // -->
+</section>
+<!-- ========================= SECTION  END// ========================= -->
+
+
+{% endblock %}
+
+
+

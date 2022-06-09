@@ -1,0 +1,69 @@
+{% extends 'myproject/master.html' %}
+{% load static %}
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+
+    <div class="container">
+        <div class="row">
+         {% include 'myproject/aside.html' %}
+        <main class="col-md-9">
+            <article class="card">
+            <header class="card-header">
+                <strong class="d-inline-block mr-3">Logged in as:</strong>
+                <span>{{user.first_name}}</span>
+            </header>
+
+
+                  <div class="card-body">
+                      <div class="row">
+                        
+                        <div class="col-md-6">
+                            <div class="card" style="text-align: center;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Order</h5>
+                                    <h4>100</h4>
+                                    <p>View Order</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-md-6">
+                            <div class="card " style="text-align: center;">
+                                <div class="card-body">  
+                                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Profile Picture" height="50" width="50" style="border-radius: 50%;"> 
+                                    <p class="mb-0">{{user.email}}</p>
+                                    <p class="mb-0">{{user.first_name}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                  </div>
+              </div>  
+            </article> <!-- order-group.// --> 
+        </main>
+    </div> <!-- row.// -->
+    </div>
+    
+    
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+    
+    
+    <!-- ========================= FOOTER ========================= -->
+    <footer class="section-footer border-top padding-y">
+        <div class="container">
+            <p class="float-md-right"> 
+                &copy Copyright 2019 All rights reserved
+            </p>
+            <p>
+                <a href="#">Terms and conditions</a>
+            </p>
+        </div><!-- //container -->
+    </footer>
+    <!-- ========================= FOOTER END // ========================= -->
+
+    
+{% endblock %}
