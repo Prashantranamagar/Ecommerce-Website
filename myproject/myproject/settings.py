@@ -160,6 +160,6 @@ import socket
 socket.getaddrinfo('localhost', 8000)
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'fighterufc2@gmail.com'
-EMAIL_HOST_PASSWORD='fighterufc.2'
+EMAIL_HOST_USER = 'ranamagar.prashant@gmail.com'
+EMAIL_HOST_PASSWORD='yxsdvpvonfepxyjh'
 EMAIL_PORT = 587
