@@ -1,4 +1,5 @@
 from email.message import EmailMessage
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.contrib import messages, auth
@@ -16,6 +17,9 @@ from cart.views import _cart_id
 from cart.models import Cart, CartItem
 
 import requests
+
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 
 
 def login(request):
@@ -75,7 +79,7 @@ def login(request):
                 if 'next' in params:
                     nextPage = params['next']
                     return redirect(nextPage)
-                return redirect(dashboard)
+                return redirect('dashboard')
             except:
                 pass
             
@@ -100,6 +104,7 @@ def register(request):
 
     if request.method == 'POST':
         firstname = request.POST['firstname']
+        lastname= request.POST['lastname']
         email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
@@ -114,7 +119,7 @@ def register(request):
                     messages.error(request, 'email is used')
                     
                 else:
-                    user = User.objects.create_user(username=firstname, password=password1, email= email)
+                    user = User.objects.create_user(username=firstname, firstname=firstname, lastname=lastname, password=password1, email= email)
                     user.save()
                     
                     #User activation
@@ -127,19 +132,20 @@ def register(request):
                         'token': default_token_generator.make_token(user),
                     })
                     to_email =email
-                    # email =EmailMessage(email_subject, message, to=[to_email])
-                    # email.send()
-                    send_mail(
-    'Subject here',
-    'Here is the message.',
-    'fighterufc2@gmail.com',
-    [to_email],
-    fail_silently=False,
-)
+                    email =EmailMessage(email_subject, message, to=[to_email])
+                    email.send()
+                    # send_mail(
+                    #     'Subject here',
+                    #     'Here is the message.',
+                    #     'ranamagar.prashant@gmail.com',
+                    #     [to_email],
+                    #     fail_silently=False,
+                    # )
 
 
-                    messages.success(request, 'You are registerd and you can login')
-                    return redirect('login')
+                    # messages.success(request, 'Thank you for registring with us. We have send you a verification email. Please verify it.')
+                    
+                    return redirect('account/login/?command=verification&email='+email)
         else:
             messages.error(request, 'Your password didnot match.')
 
@@ -152,6 +158,20 @@ def dashboard(request):
     return render(request, 'myproject/dashboard.html')
 
 
-def activate(request):
-    return
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.ObjectDoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user,token):
+        user.is_staff = True
+        user.save()
+        messages.success(request, 'Congratulation! Your account is activated')
+        return redirect('login')
+    else:
+        messages.error(request, 'Invalid Activation Link')
+        return redirect('register')
+    
 
