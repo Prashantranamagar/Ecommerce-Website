@@ -54,6 +54,10 @@ class Variation(models.Model):
     objects = VariationManager()
 
 
+    def __str__(self):
+        return str(self.product) 
+
+
 class ReviewRating(models.Model):
     product = models.ForeignKey(Products, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

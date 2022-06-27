@@ -1,4 +1,4 @@
-{% include 'myproject/master.html' %}
+{% extends 'myproject/master.html' %}
 {% load static %}
 {% block content %}
 <section class="section-content padding-y bg">
@@ -35,7 +35,7 @@
 							<div class="row">
 								<div class="item-option-select">
 									<h6>Choose Color</h6>
-									<select name="color" id="">
+									<select name="color" id="" class="bg-secondary text-white">
 										{% for i in products.variation_set.color %}
 										<option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
 										{% endfor %}
@@ -45,7 +45,7 @@
 							<div class="row">
 								<div class="item-option-select">
 									<h6>Select Size</h6>
-									<select name="size" id="">
+									<select name="size" id="" class="bg-secondary text-white">
 										{% for i in products.variation_set.size %}
 										<option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
 										{% endfor %}
