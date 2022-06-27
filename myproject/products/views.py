@@ -23,3 +23,5 @@ def product_detail(request, slug):
         'in_cart': in_cart,
         })
 
+
+

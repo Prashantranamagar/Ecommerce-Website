@@ -10,6 +10,14 @@
 
     <!-- ============================ COMPONENT LOGIN   ================================= -->
 
+    {% if request.user.is_authenticated %}
+    <div class="card mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:20px;">
+        You are already logged in as {{request.user}}
+        <br>
+        <a href="{% url 'home'%}" class="text-danger">Home</a>
+    {% else %}
+
+
     {% if request.GET.command == 'verification'%}
     <div class="card mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:20px;">
         Thank you for registring with us. We have send you a verification email at {{request.get.email}}. Please verify it.
@@ -33,7 +41,7 @@
               </div> <!-- form-group// -->
               
               <div class="form-group">
-                  <a href="#" class="float-right">Forgot password?</a> 
+                  <a href="{% url 'forgotpassword' %}" class="float-right">Forgot password?</a> 
                
               </div> <!-- form-group form-check .// -->
               <div class="form-group">
@@ -47,6 +55,8 @@
          <br><br>
     <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
     
+    {% endif %}
+
     {% endif %}
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
