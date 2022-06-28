@@ -40,15 +40,15 @@ def login(request):
                     #getting product variation by cart id
                     product_variation=[]
                     for item in cart_item:
-                        variation=item.variation.all()
+                        variation=item.variations.all()
                         product_variation.append(list(variation))
 
-                    # get the cart item for teh user to access his product variaions.
+                    # get the cart item for the user to access his product variaions.
                     cart_item = CartItem.objects.get(user=user).exist()
                     ex_var_list = []
                     id= []
                     for item in cart_item:
-                        existing_variation = item.variation.all()
+                        existing_variation = item.variations.all()
                         ex_var_list.append(list(existing_variation))
                         id.append(item.id)   
 
@@ -72,16 +72,21 @@ def login(request):
                 pass
             auth.login(request, user)
             messages.success(request, 'You are logged in.')
+
+            # Dyanmically adding the url path
+
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query
-                params = dict(x.split('=')for x in query.split('&'))
+                # next=/cart/checkout/
+                params = dict(x.split('=') for x in query.split('&'))
+                print(params)
                 if 'next' in params:
                     nextPage = params['next']
                     return redirect(nextPage)
-                return redirect('dashboard')
+                
             except:
-                pass
+                return redirect('dashboard')
             
         else:
             messages.error(request, 'Invalid credentals')
@@ -119,7 +124,7 @@ def register(request):
                     messages.error(request, 'email is used')
                     
                 else:
-                    user = User.objects.create_user(username=firstname, firstname=firstname, lastname=lastname, password=password1, email= email)
+                    user = User.objects.create_user(username=firstname, first_name=firstname, last_name=lastname, password=password1, email= email)
                     user.save()
                     
                     #User activation
@@ -143,9 +148,9 @@ def register(request):
                     # )
 
 
-                    #messages.success(request, 'Thank you for registring with us. We have send you a verification email. Please verify it.')
+                    messages.success(request, 'Thank you for registring with us. We have send you a verification email. Please verify it.')
                     
-                    return redirect('account/login/?command=verification&email='+email)
+                    return redirect('login')
         else:
             messages.error(request, 'Your password didnot match.')
 
