@@ -73,5 +73,5 @@ def place_order(request, total=0, quantity=0):
 def payments(request):
     return render(request, 'myproject/payments.html')
 
-
+ 
     

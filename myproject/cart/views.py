@@ -65,7 +65,6 @@ def add_cart(request, product_id):
                 user = current_user,
             )
             if len(product_variation)>0:
-                for cart_item in product_variation:
                     cart_item.variations.clear()
                     cart_item.variations.add(*product_variation)
             cart_item.save()
