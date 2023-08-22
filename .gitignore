@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django development settings
+*.sqlite3
+*.db
+*.log
+*.pot
+*.pyc
+*.swp
+
+# Temporary / backup files
+*~
+.DS_Store
+
+# Media and static files
+media/
+static/
+
+# Environment configuration
+.env
+.env.local
+.env.*.local
+env/
+
+# Local development settings
+*.env
+
+# Compiled Python files
+*.pyc
+
+# Dependency directories
+venv/
+node_modules/
+
+# macOS folder attributes
+.AppleDouble
+.DS_Store
