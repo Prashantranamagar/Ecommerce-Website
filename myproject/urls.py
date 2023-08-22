@@ -18,15 +18,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
-from django.http import HttpResponse 
 
-def home(request):
-    return HttpResponse("hello World")
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name="home"),
-    # path('', views.home, name="home"),
+
+    path('', views.home, name="home"),
     path('category/', include('category.urls')),
     path('products/', include('products.urls')),
     path('account/', include('accounts.urls')),
