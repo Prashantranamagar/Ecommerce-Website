@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Order
+from .models import Order, Payment
 from cart.models import CartItem
 from .forms import OrderForm
 import datetime
-
 
 def place_order(request, total=0, quantity=0):
     current_user = request.user 
@@ -53,6 +52,8 @@ def place_order(request, total=0, quantity=0):
             data.order_number = order_number
             data.save()
             order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+            payment = Payment.objects.create(user=current_user, payment_id= order.id, amount_paid=grand_total, status='paid', created_at=current_date)
+            payment.save()
             context = {
                 'order':order,
                 'cart_items':cart_items,
@@ -71,6 +72,8 @@ def place_order(request, total=0, quantity=0):
     
 
 def payments(request):
+    #get the data from Payment table ane show on the ui
+
     return render(request, 'myproject/payments.html')
 
  
